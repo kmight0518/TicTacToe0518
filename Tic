@@ -1,0 +1,189 @@
+
+import java.util.*;
+
+public class tictactoe {
+	public static void main(String[] args) {
+		int x, y, k,q;
+		boolean win_user=false;
+		boolean win = false;
+		int count_x = 0;
+		int count_o = 0;
+		
+		// 값이 들어갈 판
+			char[][] board = new char[3][3];
+			for (int i=0;i<3;i++) {
+				for (int j=0; j<3; j++)
+					board[i][j] = ' ';
+			}
+			
+		// 값을 입력받음
+		Scanner input = new Scanner(System.in);
+
+		do {
+			// 게임 판 만들기
+			for (int i=0; i<3; i++) {
+				System.out.println("  " + board[i][0] + 
+								   "|  " + board[i][1]+
+								   "|  " + board[i][2]);
+				if (i !=2)
+					System.out.println("---|---|---");
+			}
+		// 입력값 받기
+		System.out.print("다음 수의 좌표를 입력하시오: ");
+		x = input.nextInt();
+		y = input.nextInt();
+		
+		// 놓인 곳에 두면 다시 두기
+		if (board[x][y] != ' ') {
+			System.out.println("잘못된 위치입니다. ");
+			continue;
+		} else
+			board[x][y]= 'X';
+		
+		// 빈 공간에 놓도록 하기
+		int i = 0, j = 0;
+		for (i=0; i<3;i++) {
+			for (j=0;j<3;j++)
+				if (board[i][j] == ' ')
+						break;
+			if(j<3 && board[i][j] == ' ')
+				break;
+		}
+		if (i<3 && j<3)
+			board[i][j] = 'O';
+		
+		// 승리조건
+		
+		// 가로 검증
+		// x 검증
+		for (k=0;k<3;k++) {
+			for (q=0;q<3;q++) {
+				if(board[k][q] == 'X')
+					count_x++;
+			}
+			if(count_x!=3)
+				count_x=0;
+			if(count_x==3)
+				break;
+		}
+		// o 검증
+		for (k=0;k<3;k++) {
+			for (q=0;q<3;q++) {
+				if(board[k][q] == 'O')
+					count_o++;
+			}
+			if(count_o!=3)
+				count_o=0;
+			if(count_o==3)
+				break;
+		}
+		if(count_x==3 || count_o==3) {
+			win=true;
+			if(count_x==3) 
+				win_user=true;
+			else win_user=false;
+		}
+		// count 값들 초기화
+		count_x = 0;
+		count_o = 0;
+
+		
+		// 세로 검증
+		// x 검증
+		for(k=0;k<3;k++) {
+			for(q=0;q<3;q++) {
+				if(board[q][k] == 'X')
+					count_x++;
+			}
+			if(count_x!=3)
+				count_x=0;
+			if(count_x==3)
+				break;
+		}
+		// o 검증
+		for (k=0;k<3;k++) {
+			for (q=0;q<3;q++) {
+				if(board[q][k] == 'O')
+					count_o++;
+				}
+			if(count_o!=3)
+				count_o=0;
+			if(count_o==3)
+				break;
+		}
+		if(count_x==3 || count_o==3) {
+			win=true;
+			if(count_x==3) 
+				win_user=true;
+			else win_user=false;
+		}
+		// count 값들 초기화
+		count_x = 0;
+		count_o = 0;
+
+		
+		// 대각선 / 검증
+		for(k=0;k<3;k++) {
+			if(board[k][k] == 'X')
+				count_x++;
+		}
+
+		for(k=0;k<3;k++) {
+			if(board[k][k] == 'O') {
+				count_o++;
+			}
+		}
+
+		if(count_x==3 || count_o==3) {
+			win = true;
+			if(count_x==3)
+				win_user=true;
+			else win_user=false;
+		}
+		
+		// count 값들 초기화
+		count_x = 0;
+		count_o = 0;
+
+		
+		// 대각선 \ 검증
+		for(k=0;k<3;k++) {
+			if(board[k][(2*k+2)%3]=='X')
+				count_x++;
+		}
+		for(k=0;k<3;k++) {
+			if(board[k][(2*k+2)%3]=='O')
+				count_o++;
+		}
+
+		if(count_x==3 || count_o==3) {
+			win = true;
+			if(count_x==3)
+				win_user=true;
+			else win_user=false;
+		}		
+
+		// count 값들 초기화
+		count_x = 0;
+		count_o = 0;
+
+	
+		} while (!win);
+		
+		// 게임판 출력
+		for (int i=0; i<3; i++) {
+			System.out.println("  " + board[i][0] + 
+							   "|  " + board[i][1]+
+							   "|  " + board[i][2]);
+			if (i !=2)
+				System.out.println("---|---|---");
+		}
+
+		// 유저와 컴퓨터 중 누가 이겼는지 출력
+		if(win_user==true)
+			System.out.println("User Win!");
+		else
+			System.out.println("Computer Win!");
+		
+	}
+}
